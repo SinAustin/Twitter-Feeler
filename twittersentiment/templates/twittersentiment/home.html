@@ -1,0 +1,17 @@
+{% extends 'twittersentiment/base.html' %}
+{% block title %} Twitter Sentiment Analysis {% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <h1>Twitter Sentiment Analysis</h1>
+    <form method="post" action="graph-results">
+        {% csrf_token %}
+        What're we analysing? : <input type = 'text' name='query'><br>
+        <input type="submit">
+        
+    </form>
+</div>
+{% endblock %}
+
+<link rel="stylesheet" type="text/css" href="twittersentiment/style_detail.css" />

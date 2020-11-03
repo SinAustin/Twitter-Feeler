@@ -1,15 +1,15 @@
 from django.urls import path
 from .views import *
-app_name = 'polls'
+from . import views
+app_name = 'twittersentiment'
 urlpatterns = [
     #<int= is number, question id>
-    #polls/
+    #twittersentiment/
     #home/
-    path('home', home, name='home'),
-    path('api/get_data/', get_data, name='get_data'),
-    path('api/chart/get_data/', ChartData.as_view()),
+    path('home', views.HomeView.as_view(), name='home'),
+    path('graph-results', views.GraphView.as_view(), name='graph'),
     path('', index, name='index'),
-    # polls/*
+    # twittersentiment/*
     path('specifics/<int:question_id>/', detail, name='detail'),
     # poll/*/result
     path('<int:question_id>/results/',results, name='results'),
