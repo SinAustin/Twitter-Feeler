@@ -1,9 +1,14 @@
 {% extends 'twittersentiment/base.html' %}
-{% block title %} Twitter Sentiment Analysis {% endblock title %}
+<head>
+    <meta charset="UTF-8">
+    <title> Twitter Sentiment Analysis</title>
+</head>
 
+{% block title %} Twitter Sentiment Analysis {% endblock title %}
 
 {% block content %}
 <div class="container">
+    Hellooooo
     <h1>Twitter Sentiment Analysis</h1>
     <form method="post" action="graph-results">
         {% csrf_token %}

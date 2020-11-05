@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import Questions, Choices
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import View,TemplateView
@@ -17,8 +17,9 @@ from django import forms
 class HomeView(View):
     def get(self, request):
         #do something with 'GET' method
-        query = 'str(request.POST.get("query", False))'
-        return render(request, 'twittersentiment/home.html',  {'query': query})
+        query = str(request.POST.get("query", False))
+        context = {'query': query}
+        return render(request, 'twittersentiment/home.html',  context)
 
     
     
