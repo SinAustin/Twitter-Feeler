@@ -12,6 +12,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Questions, Choices
 from django import forms
+from .datascience.gettweets import listener  
+from tweepy import Stream
+from tweepy import OAuthHandler
+from tweepy.streaming import StreamListener
+from .config import *
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+analyzer = SentimentIntensityAnalyzer()
 # Create your views here.
 # everything takes a request object!python
 class HomeView(View):
@@ -26,9 +33,21 @@ class HomeView(View):
 class GraphView(View):
     authentication_classes = []
     permission_classes = []
+    def post(self, request):
 
-    def post(self,request):
-        return render(request, 'twittersentiment/graphs.html', {})
+        print("\n ===== Graph View =====\n")
+        if request.method == 'POST':
+
+            query = request.POST.get('query')
+            """auth = OAuthHandler(ckey, csecret)
+            auth.set_access_token(atoken, asecret)
+
+            twitterStream = Stream(auth, listener())
+            twitterStream.filter(track=[query], count = 10)"""
+            
+            context = {}
+            
+            return render(request, 'twittersentiment/livegraph.html', context)
 
 
 def index(request):
