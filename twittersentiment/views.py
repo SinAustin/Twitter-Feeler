@@ -45,7 +45,7 @@ class GraphView(View):
             twitterStream = Stream(auth, listener())
             twitterStream.filter(track=[query], count = 10)"""
             
-            context = {}
+            context = {'query':query}
             
             return render(request, 'twittersentiment/livegraph.html', context)
 
