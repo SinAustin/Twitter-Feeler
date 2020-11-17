@@ -8,14 +8,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
-    <title>Hello, world!</title>
+    <title>Sentiment Home</title>
   </head>
-  <body class="bg-primary bg-gradient py-5">
+  <body class="bg-primary bg-gradient py-5" style="background-image: url(https://i.postimg.cc/dt6FkPH3/twitter.jpg);">
     <div class="col-md-6 offset-md-3">
-        <div class="card">
-            <div class="card-body">
+        <div class="card" style="background-color: rgba(88, 88, 88, 0.315);">
+            <div class="card-body" >
                 <div class="mx-auto" style="width: 700px;" >
-                <h1>Sentiment Analysis of Live Tweets</h1>
+                <h1>Sentiment Analysis of 1,000 Tweets</h1>
                 </div>
                 <nav class="bg-dark text-white-50 mb-5">
                     <div class="container">
@@ -37,13 +37,14 @@
                       width: 100%;
                       height:200px;
                       margin: 0 auto;
-                      background-color:rgb(216, 216, 216) ;
+                      background-color:rgba(216, 216, 216, 0.349) ;
                     }
                   </style>
+                  
                   <form method="post" action="graph-results">
                     {% csrf_token %}
-                    Subject : <input type = 'text' name='query' style="height:50px; width:850px; background-color:rgb(185, 185, 185);"><br>
-                    <input type="submit" style="height:50px; width:850px; background-color:rgb(109, 250, 255);">
+                    Subject : <input type = 'text' name='query' style="height:50px; width:850px; background-color:rgba(255, 255, 255, 0.466);"><br>
+                    <input type="submit" style="height:50px; width:1000px; background-color:rgba(109, 255, 182, 0.644);">
                     
                 </form>
                  </divclass="centerDiv">
