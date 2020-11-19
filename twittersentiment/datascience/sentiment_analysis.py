@@ -36,5 +36,8 @@ class analyzer():
                 negatives.append(negative_count)
         except:
             raise Exception('Vader Sentiment Analysis failed ') 
+        total_count = positive_count+negative_count
+        positive_list = [_ for _ in range(1,positive_count+1)]
+        negative_list = [_ for _ in range(1,negative_count+1)]
             
-        return positive_count, negative_count, positives, negatives, count
+        return positive_count, negative_count, positives, negatives, negative_list, positive_list, count, total_count

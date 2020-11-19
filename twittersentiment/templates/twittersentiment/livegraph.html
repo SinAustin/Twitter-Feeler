@@ -32,7 +32,7 @@
         z-index: 1;
         top: 0;
         left: 0;
-        background-color:rgba(255, 255, 255, 0.177);
+        background-color:rgba(19, 19, 19, 0.925);
         overflow-x: hidden;
         padding-top: 20px;
         padding-left: 30px;
@@ -60,14 +60,14 @@
         .sidenav a {font-size: 18px;}
       }
     </style>
-  <body class="bg-black bg-gradient py-5" style="background-image: linear-gradient( 74.9deg, #a9e670 16%, rgba(84,208,253,1) 76% ); padding-left: 250px;"  ;>
+  <body class="bg-black bg-gradient py-5" style="background-image: linear-gradient( 74.9deg, #a9e670d7 16%, rgba(84,208,253,1) 76% ); padding-left: 250px;"  ;>
     <div class="sidenav py-5">
       <div class="row">
         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-search" fill="white" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
             <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
           </svg>
-          <a href="http://127.0.0.1:8000/twittersentiment/home" >New Query</a>
+          <a href="http://127.0.0.1:8000/twittersentiment/home" >New Query </style></a>
        </div>
        <div class="row">
         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-globe" fill="white" xmlns="http://www.w3.org/2000/svg">
@@ -85,6 +85,7 @@
               <div class="container">
                <div class="row p-3">
                  <div class="col-md pb-2 pb-md-0">
+                   {{query}}
                     
                 </div>
               </div>
@@ -110,28 +111,36 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> 
     
     <script>
+      var chartdata_negative_count ={{negative_count}};
+      var chartdata_positive_count ={{positive_count}};
       var ctx = document.getElementById('myChartBar').getContext('2d');
       var myChart = new Chart(ctx, {
           type: 'bar',
           data: {
-              labels: ['Negative', 'Positive'],
+              labels: ['Tweet Sentiment Count'],
               datasets: [{
-                  label: 'Positives VS Negatives',
-                  data: [2,4],
+                  label: 'Negative Tweets',
+                  data: [chartdata_negative_count],
                   backgroundColor: [
-                      'rgba(255, 99, 132, 0.8)',
-                      'rgba(54, 162, 236, 0.8)'
+                      'rgba(255, 99, 132, 0.6)'
                   ],
                   borderColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
+                      'rgba(255, 99, 132, 1)'
                   ],
                   borderWidth: 1
-              }]
+              },
+              {
+                  label: 'Positive Tweets',
+                  data: [chartdata_positive_count],
+                  backgroundColor: [
+                      'rgba(54, 236, 162, 0.6)'
+                  ],
+                  borderColor: [
+                      'rgba(54, 162, 235, 1)'
+                  ],
+                  borderWidth: 1
+              }
+              ]
           },
           options: {
               scales: {
@@ -143,21 +152,35 @@
               }
           }
       });
-            
+      var chartdata_total ={{total_count}};
+      var chartdata_negatives ={{negatives}};
+      var chartdata_positives ={{positives}};
+      var chartdata_negative_list ={{negative_list}};
+      var chartdata_positive_list ={{positive_list}};
       var ctx = document.getElementById('myChartline').getContext('2d');
       var myChart = new Chart(ctx, {
           type: 'line',
           data: {
-              labels: [1,2,3,7],
+              labels: chartdata_negative_list,
               datasets: [{
-                  label: '# of Votes',
-                  data: [1,2,3,7],
+                  label: '# of Negative Tweets',
+                  data: chartdata_negatives,
                   backgroundColor: [
-                      'rgba(0, 0, 0, 0.1)'],
+                      'rgba(0, 0, 0, 0.04)'],
                   borderColor: [
-                      'rgba(0, 0, 0, 0.8)'
+                      'rgba(255, 99, 132, 0.8)'
                   ],
-                  borderWidth: 1
+                  borderWidth: 4
+              },
+              {     
+                  label: '# of Positive Tweets',
+                  data: chartdata_positives,
+                  backgroundColor: [
+                      'rgba(0, 0, 0, 0.04)'],
+                  borderColor: [
+                      'rgba(54, 236, 162, 0.8)'
+                  ],
+                  borderWidth: 7
               }]
           },
           options: {
@@ -175,27 +198,26 @@
       var myChart = new Chart(ctx, {
           type: 'line',
           data: {
-              labels: ['Red'],
+              labels: ['Sentiment'],
               datasets: [{
-                  label: '# of Votes',
+                  label: 'Sentiment Change Over Time',
                   data: [12, 19, 3, 5, 2, 3],
                   backgroundColor: [
-                      'rgba(255, 99, 132, 0.5)'],
+                      'rgba(255, 99, 132, 0.04)'],
                   borderColor: [
                       'rgba(255, 99, 132, 0.8)'
                   ],
-                  borderWidth: 1
+                  borderWidth: 4
               }]
           },
           options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true
-                      }
-                  }]
+              animation: {
+                  onProgress: function(animation) {
+                      progress.value = animation.animationObject.currentStep / animation.animationObject.numSteps;
+                  }
               }
           }
+          
       });
 
 

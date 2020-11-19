@@ -37,12 +37,18 @@ class GraphView(View):
             # reading in tweets
             df = pd.read_csv('./tweets.txt')
             # nltk analyzer
-            positive_count, negative_count, positives, negatives, count = analyzer.vader_sentiment(df=df)
+            positive_count, negative_count, positives, negatives, negative_list, positive_list, count, total_count= analyzer.vader_sentiment(df=df)
 
             context = {'query':query,
+                        'positive_count': positive_count,
+                        'negative_count': negative_count,
                         'positives': positives,
                         'negatives': negatives,
-                        'count': count}
+                        'positive_list':positive_list,
+                        'negative_list':negative_list,
+                        'count': count,
+                        'total_count': total_count,
+                        }
             
             output = open('tweets.txt','w').close()
             output = open('tweets.txt','a')
