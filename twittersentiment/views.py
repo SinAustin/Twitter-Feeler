@@ -10,7 +10,7 @@ from tweepy.streaming import StreamListener
 from .datascience.config import *
 from .datascience.sentiment_analysis import *
 import pandas as pd
-
+import os
 
 # Create your views here.
 # everything takes a request object!python
@@ -34,13 +34,18 @@ class GraphView(View):
             # get_tweets.py - using tweepy to retrieves tweets
             twitterStream.filter(track=[query])
             
+            # reading in tweets
             df = pd.read_csv('./tweets.txt')
             # nltk analyzer
             positive_count, negative_count, positives, negatives, count = analyzer.vader_sentiment(df=df)
-            print(count)
-            
+
             context = {'query':query,
                         'positives': positives,
+                        'negatives': negatives,
                         'count': count}
             
+            output = open('tweets.txt','w').close()
+            output = open('tweets.txt','a')
+            output.write('tweet, time\n')
+            output.close()
             return render(request, 'twittersentiment/livegraph.html', context)

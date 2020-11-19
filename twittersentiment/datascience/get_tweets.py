@@ -2,14 +2,17 @@ from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 from ..config import *
-
+import os.path
 
 class listener(StreamListener):
     """ twitter streaming class s"""
     # create txt file to store tweets
-    output = open('tweets.txt','a')
-    output.write('tweet, time\n')
-    output.close() 
+    if os.path.isfile('tweets.txt'):
+        pass
+    else:
+        output = open('tweets.txt','a')
+        output.write('tweet, time\n')
+        output.close() 
     
     def __init__(self):
         """ tweet limit """
