@@ -33,6 +33,7 @@ class listener(StreamListener):
             if text.startswith('RT'):
                 text = text.split('RT')[1].replace(',','')
                 print(text)
+                print(time)
                 
                 line = str(text + ',' + str(time) + '\n')
                 output = open('tweets.txt','a')
