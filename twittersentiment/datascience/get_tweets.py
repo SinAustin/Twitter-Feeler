@@ -3,6 +3,8 @@ from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 from ..config import *
 import os.path
+import sys
+import os
 
 class listener(StreamListener):
     """ twitter streaming class s"""
@@ -11,14 +13,13 @@ class listener(StreamListener):
         pass
     else:
         output = open('tweets.txt','a')
-        output.write('tweet, time\n')
+        output.write('tweets, time\n')
         output.close() 
     
     def __init__(self):
         """ tweet limit """
         super().__init__()
-        self.counter = 0
-        self.limit = 100
+        self.reset()
     
     def on_status(self, status):
         """  Retrieves the text and publish time for each tweet. 
@@ -55,7 +56,10 @@ class listener(StreamListener):
             if self.counter < self.limit:
                 return True
             else:
+                self.counter ==0
                 twitterStream.disconnect()
+                
+                                    
         except BaseException as e:
             print('failed on_status,',str(e))
             
@@ -63,6 +67,12 @@ class listener(StreamListener):
     
     def on_error(self, status):
         print(status)
+
+    def reset(self):
+        
+        self.counter = 0
+        self.limit = 1000
+        
 
 auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)

@@ -9,13 +9,15 @@ from tweepy.streaming import StreamListener
 
 from .datascience.config import *
 from .datascience.sentiment_analysis import *
-import pandas as pd
+
+
 import os
 
 # Create your views here.
 # everything takes a request object!python
 class HomeView(View):
     def get(self, request):
+        
         print("\n ===== Home View =====\n")
         query = str(request.POST.get("query", False))
         context = {'query': query}
@@ -35,23 +37,30 @@ class GraphView(View):
             twitterStream.filter(track=[query])
             
             # reading in tweets
-            df = pd.read_csv('./tweets.txt')
-            # nltk analyzer
-            positive_count, negative_count, positives, negatives, negative_list, positive_list, count, total_count= analyzer.vader_sentiment(df=df)
-
+            df = pd.read_csv('./tweets.txt',error_bad_lines=False, engine="python")
+            # analyzer
+            
+            positive_count, negative_count,neutral_count, negative_list, positive_list, total_count,count_list, wave, wave_max, wave_min, wave_color_shift, hist_counts= analyzer.tb_sentiment(self, df=df)
+           
             context = {'query':query,
                         'positive_count': positive_count,
                         'negative_count': negative_count,
-                        'positives': positives,
-                        'negatives': negatives,
+                        'neutral_count': neutral_count,
+                     
                         'positive_list':positive_list,
                         'negative_list':negative_list,
-                        'count': count,
+                       
                         'total_count': total_count,
+                        'count_list': count_list,
+                        'wave': list(wave),
+                        'wave_max': wave_max,
+                        'wave_min': wave_min,
+                        'wave_color_shift': list(wave_color_shift),
+                        'hist_counts':hist_counts
                         }
             
             output = open('tweets.txt','w').close()
             output = open('tweets.txt','a')
-            output.write('tweet, time\n')
+            output.write('tweets, time\n')
             output.close()
             return render(request, 'twittersentiment/livegraph.html', context)

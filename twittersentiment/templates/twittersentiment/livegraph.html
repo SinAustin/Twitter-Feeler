@@ -94,7 +94,7 @@
       </div>
     <div class="row"> 
         <div class="col-md-6"> 
-          <canvas id="myChartline"></canvas> 
+          <canvas id="myCharthist"></canvas> 
         </div> 
         <div class="col-md-6"> 
           <canvas id="myChartBar"></canvas> 
@@ -111,6 +111,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> 
     
     <script>
+      var chartdata_neutral_count = {{neutral_count}}
       var chartdata_negative_count ={{negative_count}};
       var chartdata_positive_count ={{positive_count}};
       var ctx = document.getElementById('myChartBar').getContext('2d');
@@ -130,6 +131,16 @@
                   borderWidth: 1
               },
               {
+                  label: 'Neutral Tweets',
+                  data: [chartdata_neutral_count],
+                  backgroundColor: [
+                      'rgba(4, 2, 162, 0.3)'
+                  ],
+                  borderColor: [
+                      'rgba(4, 2, 235, 7)'
+                  ],
+                  borderWidth: 1
+              },{
                   label: 'Positive Tweets',
                   data: [chartdata_positive_count],
                   backgroundColor: [
@@ -142,7 +153,14 @@
               }
               ]
           },
-          options: {
+          options: {scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                beginAtZero: true 
+            }
+        }]
+    },
             title: {
             display: true,
             text: 'Negative Vs Positive Tweets'
@@ -152,67 +170,82 @@
               
           }
       });
-      var chartdata_total ={{total_count}};
-      var chartdata_negatives ={{negatives}};
-      var chartdata_positives ={{positives}};
-      var chartdata_negative_list ={{negative_list}};
-      var chartdata_positive_list ={{positive_list}};
-      var ctx = document.getElementById('myChartline').getContext('2d');
+      var chart_data_hist_counts = {{hist_counts}}
+      var ctx = document.getElementById("myCharthist").getContext('2d');
+      var dataValues = chart_data_hist_counts;
+      var dataLabels = ['-1 to -.8', '-.8 to -.6','-.6 to -.4', '-.4 to -.2', '-.2 to 0','0 to .2','.2 to .4','.4 to .6','.6 to.8','.8 to 1'];
       var myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-              labels: chartdata_negative_list,
-              datasets: [{
-                  label: '# of Negative Tweets',
-                  data: chartdata_negatives,
-                  backgroundColor: [
-                      'rgba(0, 0, 0, 0.04)'],
-                  borderColor: [
-                      'rgba(255, 99, 132, 0.8)'
-                  ],
-                  borderWidth: 4
-              },
-              {     
-                  label: '# of Positive Tweets',
-                  data: chartdata_positives,
-                  backgroundColor: [
-                      'rgba(0, 0, 0, 0.04)'],
-                  borderColor: [
-                      'rgba(54, 236, 162, 0.8)'
-                  ],
-                  borderWidth: 7
-              }]
-          },options: {
-            title: {
+        type: 'bar',
+        data: {
+          labels: dataLabels,
+          datasets: [{
+            label: 'Sentiment',
+            data: dataValues,
+            backgroundColor: 'rgba(255, 99, 132, 6)',
+          }]
+        },
+        options: {
+          title: {
             display: true,
-            text: 'Tweets Count Over Time'
-        }
-             
-                
-              
+            text: 'Sentiment Distribution'
+        },
+          scales: {
+            xAxes: [{
+              display: false,
+              barPercentage: 1.3,
+              ticks: {
+                  max: 3,
+              }
+          }, {
+              display: true,
+              ticks: {
+                  autoSkip: false,
+                  max: 4,
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
           }
-      });
-     
+        }
+});
+      var chart_data_wave_max = {{wave_max}}
+      var chart_data_wave_min = {{wave_min}}
+      var chart_data_wave = {{wave}}
+      var chartdata_total ={{total_count}};
+      var chartdata_count_list = {{count_list}};
       var ctx = document.getElementById('myChartline2').getContext('2d');
       var myChart = new Chart(ctx, {
           type: 'line',
           data: {
-              labels: ['Sentiment'],
+              labels: chartdata_count_list,
               datasets: [{
-                  label: 'Sentiment Change Over Time',
-                  data: [12, 19, 3, 5, 2, 3],
+                  label: 'Sentiment Change Over Tweets',
+                  data: chart_data_wave,
                   backgroundColor: [
-                      'rgba(255, 99, 132, 0.04)'],
+                      'rgba(23, 99, 222, 0.04)'],
                   borderColor: [
-                      'rgba(255, 99, 132, 0.8)'
+                      'rgba(25, 9, 132, 0.5)'
                   ],
-                  borderWidth: 4
+                  borderWidth: 2,
+                  pointStyle: 'line'
               }]
           },
           options: {
-            title: {
+              scales: {
+              yAxes: [{
+                  ticks: {
+                      suggestedMin: chart_data_wave_min,
+                      suggestedMax: chart_data_wave_max
+                  }
+              }]
+          },
+            
+          title: {
             display: true,
-            text: 'Sentiment Change Over Time'
+            text: 'Sentiment Change Over Tweets'
         }
              
                 
