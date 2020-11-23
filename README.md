@@ -3,8 +3,6 @@
 
 ## Functionality: Enter a trending subject, 10,000 live tweets will be saved as they are tweeted, those tweets will have their sentiment analyzed and the results will be graphed.
 
-![](imgs/image1.jpg)
-
 # Home Page
 
 ![](imgs/home1.png)
@@ -16,3 +14,5 @@
 # Results Page
 
 ![](imgs/result2.png)
+
+![](imgs/image1.jpg)
