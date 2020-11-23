@@ -13,4 +13,4 @@
 
 # Results Page
 
-![](imgs/results2.png)
+![](imgs/result2.png)
